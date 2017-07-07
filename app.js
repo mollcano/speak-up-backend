@@ -5,6 +5,7 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var watson = require('watson-developer-cloud')
+require('dotenv').config()
 
 var index = require('./routes/index');
 var users = require('./routes/users');
@@ -43,5 +44,34 @@ app.use(function(err, req, res, next) {
   res.status(err.status || 500);
   res.render('error');
 });
+
+var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
+var fs = require('fs');
+
+var speech_to_text = new SpeechToTextV1({
+  username: process.env.SPEECH_TO_TEXT_USERNAME,
+  password: process.env.SPEECH_TO_TEXT_PASSWORD
+});
+
+var params = {
+  // From file
+  audio: fs.createReadStream('./resources/practice1.wav'),
+  content_type: 'audio/wav; rate=44100',
+  timestamps: true,
+  keywords: '%HESITATION,so,like,you know,well,actually,basically,I mean',
+  keywords_threshold: 0.5
+};
+
+speech_to_text.recognize(params, function(err, res) {
+  if (err)
+    console.log(err);
+  else
+    console.log(JSON.stringify(res, null, 2));
+});
+
+// or streaming
+fs.createReadStream('./resources/practice1.wav')
+  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100', timestamps: true}))
+  .pipe(fs.createWriteStream('./transcription.txt'));
 
 module.exports = app;
