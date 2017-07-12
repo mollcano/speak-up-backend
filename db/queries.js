@@ -84,6 +84,11 @@ function addAudio(data, audio){
   })
 }
 
+function getAudio(){
+  return pg('presentation').select();
+}
+
 module.exports={
-  addAudio
+  addAudio,
+  getAudio
 }

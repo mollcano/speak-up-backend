@@ -1,2 +1,19 @@
-<h1>{{title}}</h1>
-<p>Welcome to {{title}}</p>
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>Speak Up</title>
+  </head>
+  <body>
+    <form method="POST" action="/addAudio" id="myForm">
+      <label for="title">title</label>
+      <input type="text" name="title" value="" />
+      <button type="submit" name="submit">SUBMIT</button>
+    </form>
+    <div class="audio-stuff">
+      {{#each data}}
+      <h1>{{ this.title }}</h1>
+      {{/each}}
+    </div>
+  </body>
+</html>

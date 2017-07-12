@@ -4,6 +4,14 @@ var queries = require('../db/queries')
 var watson = require('watson-developer-cloud')
 require('dotenv').config()
 
+router.get('/audio', (req, res) =>{
+  queries.getAudio()
+  .then(data => {
+    console.log(data)
+    return res.json(data)
+  })
+})
+
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
@@ -33,11 +41,13 @@ speech_to_text.recognize(params, function(err, res) {
   });
 });
 
+
 // or streaming
 fs.createReadStream('./resources/practice1.wav')
   .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100', timestamps: true, keywords: ['%HESITATION,so,like,you know,well,actually,basically,I mean'],
   keywords_threshold: 0.5}))
   .pipe(fs.createWriteStream('./transcription.txt'));
+
 
 
 
