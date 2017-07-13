@@ -84,11 +84,21 @@ function addAudio(data, audio){
   })
 }
 
-function getAudio(){
-  return pg('presentation').select();
-}
+function getAudio(id){
+  return pg('presentation').select().where("user_id", "=", id);
+};
+
+function addUser(data) {
+  return pg('myuser').insert(data);
+};
+
+function findUserIfExists() {
+  return pg('myuser').select();
+};
 
 module.exports={
   addAudio,
-  getAudio
+  getAudio,
+  addUser,
+  findUserIfExists
 }

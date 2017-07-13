@@ -4,12 +4,50 @@ var queries = require('../db/queries')
 var watson = require('watson-developer-cloud')
 require('dotenv').config()
 
-router.get('/audio', (req, res) =>{
-  queries.getAudio()
+router.get('/audio/:id', (req, res) =>{
+  console.log("my id", req.params.id)
+  queries.getAudio(req.params.id)
   .then(data => {
-    console.log(data)
+    console.log("data", data)
     return res.json(data)
   })
+})
+
+router.post('/signin', function (req, res, next) {
+    queries.findUserIfExists().where({
+            email: req.body.username
+        }).first()
+        .then(function (myuser) {
+            if (myuser) {
+              if (req.body.password === myuser.password) {
+                console.log(res.json(myuser))
+                // console.log(myuser.id)
+                // return (myuser.id)
+              } else {
+                  console.log('incorrect password')
+              }
+            } else {
+                console.log('invalid login')
+            }
+        })
+})
+
+router.post('/signup', function (req, res, next) {
+    console.log(req.body)
+    queries.findUserIfExists().where({
+            email: req.body.username
+        }).first()
+        .then(function (myuser) {
+            if (myuser) {
+                res.redirect('/');
+            } else {
+                console.log('I do not exist')
+                  queries.userTable(req.body)
+                    .then(function (data) {
+                      console.log(data)
+                    })
+            }
+        })
 })
 
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
