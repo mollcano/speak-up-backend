@@ -71,10 +71,10 @@ speech_to_text.recognize(params, function(err, res) {
   if (err)
     console.log(err);
   else
-  router.post('/addAudio', (req, response) => {
+  router.post('/addAudio/:id', (req, response) => {
     queries.addAudio(req.body, res.results[0])
-      .then(() => {
-        response.redirect('/')
+      .then((data) => {
+        return res.json(data)
       })
   });
 });

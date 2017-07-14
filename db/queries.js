@@ -64,10 +64,51 @@ function addAudio(data, audio){
   var alternatives = audio.alternatives[0]
   var length = (alternatives.timestamps[alternatives.timestamps.length-1][2])
 
+//pace
+
+var parts = (length/10)
+var parts1 = parts
+var parts2 = parts*2
+var parts3 = parts * 3
+var parts4 = parts * 4
+var parts5 = parts * 5
+var parts6 = parts * 6
+var parts7 = parts * 7
+var parts8 = parts * 8
+var parts9 = parts * 9
+var parts10 = parts * 10
+var myParts = ([parts1, parts2, parts3, parts4, parts5, parts6, parts7, parts8, parts9, parts10])
+var count = [0,0,0,0,0,0,0,0,0,0]
+var myWords = audio.alternatives[0].timestamps
+
+for (var i=0; i<myParts.length; i++){
+  for (var j=0; j<myWords.length; j++){
+    if (myWords[j][1]<myParts[0]){
+      count[0]++
+    }
+    else if(myWords[j][1]>myParts[i] && myWords[j][1] <=myParts[i+1]){
+      count[i+1]++
+    }
+  }
+}
+var part1=count[0]
+var part2=count[1]
+var part3=count[2]
+var part4=count[3]
+var part5=count[4]
+var part6=count[5]
+var part7=count[6]
+var part8=count[7]
+var part9=count[8]
+var part10=count[9]
+
+//wpm
+var wordsPerSecond = (myWords[(myWords).length-1][2])/(myWords).length
+var wordsPerMinute = (wordsPerSecond*60)
 
   return pg('presentation').insert({
     title:data.title,
-    user_id: 1,
+    user_id: data.user_id,
     confidence: alternatives.confidence,
     transcript: alternatives.transcript,
     number_of_fillers: num,
@@ -80,6 +121,17 @@ function addAudio(data, audio){
     basically: basically,
     i_mean: iMean,
     pauses: pauses,
+    wpm: wordsPerMinute,
+    part1: part1,
+    part2: part2,
+    part3: part3,
+    part4: part4,
+    part5: part5,
+    part6: part6,
+    part7: part7,
+    part8: part8,
+    part9: part9,
+    part10: part10,
     length_of_audio: length
   })
 }
