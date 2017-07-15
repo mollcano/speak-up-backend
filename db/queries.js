@@ -103,7 +103,7 @@ var part9=count[8]
 var part10=count[9]
 
 //wpm
-var wordsPerSecond = (myWords[(myWords).length-1][2])/(myWords).length
+var wordsPerSecond = (myWords).length/(myWords[(myWords).length-1][2])
 var wordsPerMinute = (wordsPerSecond*60)
 
   return pg('presentation').insert({
@@ -133,6 +133,8 @@ var wordsPerMinute = (wordsPerSecond*60)
     part9: part9,
     part10: part10,
     length_of_audio: length
+  },"*").then((results)=>{
+    return results[0]
   })
 }
 

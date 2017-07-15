@@ -8,7 +8,6 @@ router.get('/audio/:id', (req, res) =>{
   console.log("my id", req.params.id)
   queries.getAudio(req.params.id)
   .then(data => {
-    console.log("data", data)
     return res.json(data)
   })
 })
@@ -58,38 +57,57 @@ var speech_to_text = new SpeechToTextV1({
   password: process.env.SPEECH_TO_TEXT_PASSWORD
 });
 
-var params = {
-  // From file
-  audio: fs.createReadStream('./resources/likeso.wav'),
-  content_type: 'audio/wav; rate=44100',
-  timestamps: true,
-  keywords: '%HESITATION,so,like,you know,well,actually,basically,I mean',
-  keywords_threshold: 0.5
-};
 
-speech_to_text.recognize(params, function(err, res) {
-  if (err)
-    console.log(err);
-  else
-  router.post('/addAudio/:id', (req, response) => {
-    queries.addAudio(req.body, res.results[0])
+// speech_to_text.recognize(params, function(err, res) {
+//   if (err)
+//     console.log(err);
+//   else
+//   router.post('/addAudio/:id', (req, response) => {
+//     queries.addAudio(req.body, res.results[0])
+//       .then((data) => {
+//         return res.json(data)
+//       })
+//   });
+// });
+
+
+
+
+router.post('/addAudio/:id', (req, response) => {
+  // console.log(req.body, req.files)
+  // console.log(req.files.file.file, "my file")
+  // queries.addAudio(req.body)
+  //   .then((data) => {
+  //     return res.json(data)
+  //   })
+
+  var params = {
+    // From file
+    audio: fs.createReadStream(req.files.file.file),
+    content_type: 'audio/wav',
+    inactivity_timeout: -1,
+    timestamps: true,
+    keywords: '%HESITATION,so,like,you know,well,actually,basically,I mean',
+    keywords_threshold: 0.5
+  };
+
+  speech_to_text.recognize(params, function(err, results) {
+    if (err)
+      console.log(err);
+    else
+    queries.addAudio(req.body, results.results[0])
       .then((data) => {
-        return res.json(data)
+        return response.json(data)
       })
   });
 });
 
 
 // or streaming
-fs.createReadStream('./resources/practice1.wav')
-  .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100', timestamps: true, keywords: ['%HESITATION,so,like,you know,well,actually,basically,I mean'],
-  keywords_threshold: 0.5}))
-  .pipe(fs.createWriteStream('./transcription.txt'));
-
-
-
-
-
+// fs.createReadStream('./resources/likeso.wav')
+//   .pipe(speech_to_text.createRecognizeStream({ content_type: 'audio/l16; rate=44100', timestamps: true, keywords: ['%HESITATION,so,like,you know,well,actually,basically,I mean'],
+//   keywords_threshold: 0.5}))
+//   .pipe(fs.createWriteStream('./transcription.txt'));
 
 
 
