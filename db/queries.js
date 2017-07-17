@@ -67,6 +67,7 @@ function addAudio(data, audio){
 //pace
 
 var parts = (length/10)
+var partsPerMinute = 60/parts
 var parts1 = parts
 var parts2 = parts*2
 var parts3 = parts * 3
@@ -91,16 +92,16 @@ for (var i=0; i<myParts.length; i++){
     }
   }
 }
-var part1=count[0]
-var part2=count[1]
-var part3=count[2]
-var part4=count[3]
-var part5=count[4]
-var part6=count[5]
-var part7=count[6]
-var part8=count[7]
-var part9=count[8]
-var part10=count[9]
+var part1=count[0]*partsPerMinute
+var part2=count[1]*partsPerMinute
+var part3=count[2]*partsPerMinute
+var part4=count[3]*partsPerMinute
+var part5=count[4]*partsPerMinute
+var part6=count[5]*partsPerMinute
+var part7=count[6]*partsPerMinute
+var part8=count[7]*partsPerMinute
+var part9=count[8]*partsPerMinute
+var part10=count[9]*partsPerMinute
 
 //wpm
 var wordsPerSecond = (myWords).length/(myWords[(myWords).length-1][2])
@@ -112,6 +113,40 @@ var wordsPerMinute = (wordsPerSecond*60)
     confidence: alternatives.confidence,
     transcript: alternatives.transcript,
     number_of_fillers: num,
+    fillers: JSON.stringify(
+      [{
+      "name": "um, uh, hmm",
+      "fillerNum": hesitation
+    },
+    {
+      "name": "so",
+      "fillerNum": so
+    },
+    {
+      "name": "like",
+      "fillerNum": like
+    },
+    {
+      "name": "you know",
+      "fillerNum": youKnow
+    },
+    {
+      "name": "well",
+      "fillerNum": well
+    },
+    {
+      "name": "actually",
+      "fillerNum": actually
+    },
+    {
+      "name": "basically",
+      "fillerNum": basically
+    },
+    {
+      "name": "I mean",
+      "fillerNum": iMean
+    }]
+  ),
     hesitation: hesitation,
     so: so,
     like: like,
@@ -122,6 +157,52 @@ var wordsPerMinute = (wordsPerSecond*60)
     i_mean: iMean,
     pauses: pauses,
     wpm: wordsPerMinute,
+    pace: JSON.stringify(
+      [{
+      "name": "part1",
+      "part": part1
+    },
+    {
+      "name": "part2",
+      "part": part2
+    },
+    {
+      "name": "part3",
+      "part": part3
+    },
+    {
+      "name": "part4",
+      "part": part4
+    },
+    {
+      "name": "part4",
+      "part": part4
+    },
+    {
+      "name": "part5",
+      "part": part5
+    },
+    {
+      "name": "part6",
+      "part": part6
+    },
+    {
+      "name": "part7",
+      "part": part7
+    },
+    {
+      "name": "part8",
+      "part": part8
+    },
+    {
+      "name": "part9",
+      "part": part9
+    },
+    {
+      "name": "part10",
+      "part": part10
+    }]
+  ),
     part1: part1,
     part2: part2,
     part3: part3,

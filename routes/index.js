@@ -32,7 +32,6 @@ router.post('/signin', function (req, res, next) {
 })
 
 router.post('/signup', function (req, res, next) {
-    console.log(req.body)
     queries.findUserIfExists().where({
             email: req.body.username
         }).first()
@@ -74,6 +73,7 @@ var speech_to_text = new SpeechToTextV1({
 
 
 router.post('/addAudio/:id', (req, response) => {
+  console.log("hello from the post")
   // console.log(req.body, req.files)
   // console.log(req.files.file.file, "my file")
   // queries.addAudio(req.body)
@@ -92,8 +92,9 @@ router.post('/addAudio/:id', (req, response) => {
   };
 
   speech_to_text.recognize(params, function(err, results) {
+    console.log(results.results[0], "results")
     if (err)
-      console.log(err);
+      console.log("hello");
     else
     queries.addAudio(req.body, results.results[0])
       .then((data) => {

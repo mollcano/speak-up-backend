@@ -7,6 +7,7 @@ exports.up = function(knex, Promise) {
     table.decimal("confidence");
     table.text("transcript");
     table.integer("number_of_fillers");
+    table.json("fillers")
     table.integer("hesitation");
     table.integer("so");
     table.integer("like");
@@ -17,16 +18,17 @@ exports.up = function(knex, Promise) {
     table.integer("i_mean");
     table.decimal("pauses");
     table.decimal("wpm");
-    table.integer("part1");
-    table.integer("part2");
-    table.integer("part3");
-    table.integer("part4");
-    table.integer("part5");
-    table.integer("part6");
-    table.integer("part7");
-    table.integer("part8");
-    table.integer("part9");
-    table.integer("part10");
+    table.json("pace");
+    table.decimal("part1");
+    table.decimal("part2");
+    table.decimal("part3");
+    table.decimal("part4");
+    table.decimal("part5");
+    table.decimal("part6");
+    table.decimal("part7");
+    table.decimal("part8");
+    table.decimal("part9");
+    table.decimal("part10");
     table.dateTime("date").notNullable().defaultTo(knex.fn.now());
     table.decimal("length_of_audio");
   });
