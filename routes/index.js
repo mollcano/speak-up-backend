@@ -57,29 +57,7 @@ var speech_to_text = new SpeechToTextV1({
 });
 
 
-// speech_to_text.recognize(params, function(err, res) {
-//   if (err)
-//     console.log(err);
-//   else
-//   router.post('/addAudio/:id', (req, response) => {
-//     queries.addAudio(req.body, res.results[0])
-//       .then((data) => {
-//         return res.json(data)
-//       })
-//   });
-// });
-
-
-
-
 router.post('/addAudio/:id', (req, response) => {
-  console.log("hello from the post")
-  // console.log(req.body, req.files)
-  // console.log(req.files.file.file, "my file")
-  // queries.addAudio(req.body)
-  //   .then((data) => {
-  //     return res.json(data)
-  //   })
 
   var params = {
     // From file
@@ -92,7 +70,7 @@ router.post('/addAudio/:id', (req, response) => {
   };
 
   speech_to_text.recognize(params, function(err, results) {
-    console.log(results.results[0], "results")
+    console.log(results.results, "results")
     if (err)
       console.log("hello");
     else
