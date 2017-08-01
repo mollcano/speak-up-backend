@@ -70,7 +70,7 @@ router.post('/addAudio/:id', (req, response) => {
   };
 
   speech_to_text.recognize(params, function(err, results) {
-    console.log(results.results, "results")
+    console.log(results.results[results.results.length-1], "results")
     if (err)
       console.log("hello");
     else
