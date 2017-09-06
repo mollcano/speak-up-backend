@@ -5,7 +5,7 @@ module.exports = {
   development: {
     client: 'pg',
     connection: {
-      database: 'speak-up',
+      database: process.env.DATABASE_URL || 'speak-up',
     }
   },
 
