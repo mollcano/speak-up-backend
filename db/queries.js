@@ -1,7 +1,12 @@
 const pg = require('./knex')
 
-
-
+function addEmail(data){
+  return pg('email_list').insert({
+    first_name: data.first_name,
+    last_name: data.last_name,
+    email: data.email
+  })
+}
 
 function addAudio(data, audio){
   //specific filler words
@@ -232,6 +237,7 @@ function findUserIfExists() {
 };
 
 module.exports={
+  addEmail,
   addAudio,
   getAudio,
   addUser,

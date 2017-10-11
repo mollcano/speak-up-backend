@@ -48,6 +48,16 @@ router.post('/signup', function (req, res, next) {
         })
 })
 
+router.post('/email_list', function (req, res, next) {
+  console.log("in email_list on backend")
+  console.log(req.body)
+  queries.addEmail(req.body)
+    .then(data => {
+      console.log(data)
+      res.redirect('https://contact.ispeakup.co')
+    })
+})
+
 var SpeechToTextV1 = require('watson-developer-cloud/speech-to-text/v1');
 var fs = require('fs');
 
