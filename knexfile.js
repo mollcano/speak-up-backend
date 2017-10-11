@@ -7,7 +7,7 @@ module.exports = {
     connection: {
       database: 'speak-up',
     }
-  }
+  },
 
   test: {
     client: 'pg',
